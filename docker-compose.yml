@@ -4,3 +4,21 @@ services:
     build: .
     ports:
       - 3002:80
+
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Denver
+      - URL=wightman.duckdns.org
+      - VALIDATION=duckdns
+      - STAGING=true 
+    volumes:
+      - /home/caleb/data/swag:/config
+    ports:
+    - 0.0.0.0:3002:80
+    restart: unless-stopped
