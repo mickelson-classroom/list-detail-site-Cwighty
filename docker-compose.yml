@@ -20,6 +20,7 @@ services:
       - STAGING=false 
     volumes:
       - /home/caleb/data/swag:/config
+      - ./default.conf:/config/nginx/site-confs/default.conf
     ports:
     - 0.0.0.0:3002:443
     restart: unless-stopped
