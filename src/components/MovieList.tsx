@@ -2,6 +2,7 @@ import { useState } from "react"
 import { MovieCard } from "./MovieCard";
 import { Movie } from "../models/Movie";
 import { MovieFilter } from "./MovieFilter";
+import { AddMovie } from "./AddMovie";
 
 export const MovieList = () => {
     const [movies, setMovies] = useState<Movie[]>([
@@ -49,6 +50,7 @@ export const MovieList = () => {
         <div>
             <h1>Movies</h1>
             <MovieFilter filter={filter} setFilter={setFilter} />
+            <AddMovie onAdd={(movie) => setMovies([...movies, movie])} />
             {filteredMovies.map((movie, index) => (
                 <MovieCard
                     key={index}
