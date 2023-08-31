@@ -1,52 +1,110 @@
-import React, { useState } from 'react'
-import { Movie } from '../models/Movie';
-import { on } from 'events';
-import { error } from 'console';
+import React, { useState } from "react";
+import { Movie } from "../models/Movie";
 
-export const AddMovie = ({onAdd}: {onAdd: (movie : Movie) => void}) => {
-    const [newMovie, setNewMovie] = useState({ title: "", director: "", releaseYear: 0, genre: [], rating: 0} as Movie);
-    const [errors, setErrors] = useState<string[]>([]);
+export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
+  const [newMovie, setNewMovie] = useState({
+    title: "",
+    director: "",
+    releaseYear: 0,
+    genre: [],
+    rating: 0,
+  } as Movie);
 
-    const handleNewMovie = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        validate();
-        if(errors.length > 0) return;
-        onAdd(newMovie);
-        setNewMovie({ title: "", director: "", releaseYear: 0, genre: [], rating: 0});
+  const handleNewMovie = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (newMovie.title.trim() === "") {
+      return; 
     }
-
-    const validate = () => {
-        const errors = [];
-        if(!newMovie.title) errors.push("Title is required");
-        if(!newMovie.director) errors.push("Director is required");
-        if(!newMovie.releaseYear) errors.push("Release Year is required");
-        if(!newMovie.genre) errors.push("Genre is required");
-        if(!newMovie.rating) errors.push("Rating is required");
-        setErrors(errors);
-        return errors.length === 0;
-    }
+    onAdd(newMovie);
+    setNewMovie({
+      title: "",
+      director: "",
+      releaseYear: 0,
+      genre: [],
+      rating: 0,
+    } as Movie);
+  };
 
   return (
-      <div>
-          <h1>Add Movie</h1>
-          <form>
-              <label>Title</label>
-              <input type="text" onChange={(e) => setNewMovie({ ...newMovie, title: e.target.value })} />
-              <label>Director</label>
-              <input type="text" onChange={(e) => setNewMovie({ ...newMovie, director: e.target.value })} />
-              <label>Rating</label>
-              <input type="number" min={1} max={10} onChange={(e) => setNewMovie({ ...newMovie, rating: Number(e.target.value) })} />
-              <label>Release Year</label>
-              <input type="text" onChange={(e) => setNewMovie({ ...newMovie, releaseYear: Number(e.target.value)})} />
-              <label>Genre (Comma separate multiple genres)</label>
-              <input type="text" onChange={(e) => setNewMovie({ ...newMovie, genre: e.target.value.split(',')})} />
-              <button type="submit" onClick={(e) => { e.preventDefault(); onAdd(newMovie); setNewMovie({} as Movie) }}>Add</button>
-          </form>
-            <ul>
-                {errors.map((error) => (
-                    <li>{error}</li>
-                ))}
-            </ul>
+    <div>
+      <h3>Add Movie</h3>
+      <form>
+        <div className="mb-3">
+          <label htmlFor="title" className="form-label">
+            Title
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="title"
+            value={newMovie.title}
+            onChange={(e) =>
+              setNewMovie({ ...newMovie, title: e.target.value })
+            }
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="director" className="form-label">
+            Director
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="director"
+            value={newMovie.director}
+            onChange={(e) =>
+              setNewMovie({ ...newMovie, director: e.target.value })
+            }
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="releaseYear" className="form-label">
+            Release Year
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="releaseYear"
+            value={newMovie.releaseYear}
+            onChange={(e) =>
+              setNewMovie({ ...newMovie, releaseYear: +e.target.value })
+            }
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="genre" className="form-label">
+            Genre
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="genre"
+            value={newMovie.genre.join(", ")}
+            onChange={(e) =>
+              setNewMovie({ ...newMovie, genre: e.target.value.split(", ") })
+            }
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="rating" className="form-label">
+            Rating
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="rating"
+            value={newMovie.rating}
+            onChange={(e) =>
+              setNewMovie({ ...newMovie, rating: +e.target.value })
+            }
+          />
+        </div>
+        <button className="btn btn-primary" onClick={handleNewMovie}>
+          Add Movie
+        </button>
+      </form>
     </div>
-  )
-}
+  );
+};
