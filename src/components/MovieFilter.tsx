@@ -9,10 +9,13 @@ export const MovieFilter = ({
     setFilter(event.target.value);
   };
 
-  return <input
-    type="text"
-    className="form-control"
-    placeholder="Search movies..."
-    value={filter}
-    onChange={handleFilterChange} />;
+  return (
+    <input
+      type="text"
+      className="form-control my-3"
+      placeholder="Search movies..."
+      value={filter}
+      onChange={handleFilterChange}
+    />
+  );
 };

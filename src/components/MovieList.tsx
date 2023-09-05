@@ -52,28 +52,36 @@ export const MovieList = () => {
 
   return (
     <div className="container">
-      <h1 className="mt-4">Movies</h1>
       <div className="row">
-        <div className="col-md-6">
-          <MovieFilter filter={filter} setFilter={setFilter} />
-          {filteredMovies.length === 0 && <em className="m-2">No movies</em>}
-        {filteredMovies.map((movie, index) => (
-          <div className="row" key={index}>
-            <MovieItem
-              movie={movie}
-              onDelete={() => handleDelete(index)}
-              onSelect={handleSelect}
-              isSelected={selectedMovie === movie}
-            />
-          </div>
-        ))}
+        <div className="col-md-3">
+          <h1 className="">Movies</h1>
         </div>
+        <div className="col-md-9">
+          <div className="">
+            <MovieFilter filter={filter} setFilter={setFilter} />
+          </div>
+        </div>
+      </div>
+      <div className="row">
         <div className="col-md-6">
           {selectedMovie && filteredMovies.includes(selectedMovie) ? (
             <MovieDetail movie={selectedMovie} />
           ) : (
-            <p>No movie selected</p>
+            <em>No movie selected</em>
           )}
+        </div>
+        <div className="col-md-6">
+          {filteredMovies.length === 0 && <em className="m-2">No movies</em>}
+          {filteredMovies.map((movie, index) => (
+            <div className="row" key={index}>
+              <MovieItem
+                movie={movie}
+                onDelete={() => handleDelete(index)}
+                onSelect={handleSelect}
+                isSelected={selectedMovie === movie}
+              />
+            </div>
+          ))}
         </div>
       </div>
       <div className="row">
