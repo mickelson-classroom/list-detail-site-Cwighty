@@ -1,5 +1,4 @@
 import { Movie } from "../models/Movie";
-import "bootstrap/dist/css/bootstrap.css";
 
 export const MovieDetail = ({ movie }: { movie: Movie }) => {
   return (

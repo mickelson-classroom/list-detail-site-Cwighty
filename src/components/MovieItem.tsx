@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Movie } from "../models/Movie";
-import "bootstrap/dist/css/bootstrap.css";
+
 
 export const MovieItem = ({
   movie,
