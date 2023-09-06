@@ -5,6 +5,7 @@ import { MovieFilter } from "./MovieFilter";
 import { AddMovie } from "./AddMovie";
 import { MovieItem } from "./MovieItem";
 import { MovieDetail } from "./MovieDetail";
+import { AddGenreModal } from "./AddGenreModal";
 
 export const MovieList = () => {
   const [movies, setMovies] = useState<Movie[]>([
@@ -51,6 +52,7 @@ export const MovieList = () => {
 );
 
   return (
+    <>
     <div className="container">
       <div className="row">
         <div className="col-md-3">
@@ -90,5 +92,7 @@ export const MovieList = () => {
         </div>
       </div>
     </div>
+      <AddGenreModal selectedMovie={selectedMovie} movies={movies} setMovies={setMovies} />
+    </>
   );
 };
