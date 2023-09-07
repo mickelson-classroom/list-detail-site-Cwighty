@@ -44,54 +44,66 @@ export const MovieList = () => {
     setSelectedMovie(movie);
   };
 
-  const filteredMovies = movies.filter((movie) =>
-  movie.title?.toLowerCase().includes(filter?.toLowerCase()) ||
-  movie.director?.toLowerCase().includes(filter?.toLowerCase()) ||
-  movie.genre.some((genre) => genre.toLowerCase().includes(filter?.toLowerCase()))
-);
+  const filteredMovies = movies.filter(
+    (movie) =>
+      movie.title?.toLowerCase().includes(filter?.toLowerCase()) ||
+      movie.director?.toLowerCase().includes(filter?.toLowerCase()) ||
+      movie.genre.some((genre) =>
+        genre.toLowerCase().includes(filter?.toLowerCase())
+      )
+  );
 
   return (
     <>
-    <div className="container">
-      <div className="row">
-        <div className="col-md-3">
-          <h1 className="">Movies</h1>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 d-flex justify-content-between align-items-center">
+            <h1 className="">Movies</h1>
+            <button
+              className="btn btn-sm btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#addMovieModal"
+            >
+              + Movie
+            </button>
+          </div>
+          <div className="col-md-12">
+            <MovieFilter filter={filter} setFilter={setFilter} movies={movies} />
+          </div>
         </div>
-        <div className="col-md-9">
-          <div className="">
-            <MovieFilter filter={filter} setFilter={setFilter} />
+        <div className="row">
+          <div className="col-md-6">
+            {selectedMovie && filteredMovies.includes(selectedMovie) ? (
+              <MovieDetail movie={selectedMovie} />
+            ) : (
+              <em>No movie selected</em>
+            )}
+          </div>
+          <div className="col-md-6">
+            {filteredMovies.length === 0 && <em className="m-2">No movies</em>}
+            {filteredMovies.map((movie, index) => (
+              <div className="row" key={index}>
+                <MovieItem
+                  movie={movie}
+                  onDelete={() => handleDelete(index)}
+                  onSelect={handleSelect}
+                  isSelected={selectedMovie === movie}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <AddMovie onAdd={(movie) => setMovies([...movies, movie])} />
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-6">
-          {selectedMovie && filteredMovies.includes(selectedMovie) ? (
-            <MovieDetail movie={selectedMovie} />
-          ) : (
-            <em>No movie selected</em>
-          )}
-        </div>
-        <div className="col-md-6">
-          {filteredMovies.length === 0 && <em className="m-2">No movies</em>}
-          {filteredMovies.map((movie, index) => (
-            <div className="row" key={index}>
-              <MovieItem
-                movie={movie}
-                onDelete={() => handleDelete(index)}
-                onSelect={handleSelect}
-                isSelected={selectedMovie === movie}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-12">
-          <AddMovie onAdd={(movie) => setMovies([...movies, movie])} />
-        </div>
-      </div>
-    </div>
-      <AddGenreModal selectedMovie={selectedMovie} movies={movies} setMovies={setMovies} />
+      <AddGenreModal
+        selectedMovie={selectedMovie}
+        movies={movies}
+        setMovies={setMovies}
+      />
     </>
   );
 };
