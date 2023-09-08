@@ -5,6 +5,7 @@ import { AddMovie } from "./AddMovie";
 import { MovieItem } from "./MovieItem";
 import { MovieDetail } from "./MovieDetail";
 import { AddGenreModal } from "./AddGenreModal";
+import { MovieQuery } from "../models/MovieQuery";
 
 export const MovieList = () => {
   const [movies, setMovies] = useState<Movie[]>([
@@ -32,7 +33,7 @@ export const MovieList = () => {
   ]);
 
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState<MovieQuery>({ title: "", genres: [] });
 
   const handleDelete = (index: number) => {
     const newMovies = [...movies];
@@ -46,11 +47,12 @@ export const MovieList = () => {
 
   const filteredMovies = movies.filter(
     (movie) =>
-      movie.title?.toLowerCase().includes(filter?.toLowerCase()) ||
-      movie.director?.toLowerCase().includes(filter?.toLowerCase()) ||
-      movie.genre.some((genre) =>
-        genre.toLowerCase().includes(filter?.toLowerCase())
-      )
+      movie.title?.toLowerCase().includes(filter.title.toLowerCase()) ||
+      movie.director
+        ?.toLowerCase()
+        .includes(filter?.title.toLowerCase() ?? "") ||
+      (movie.genre.some((genre) => movie.genre.includes(genre)) &&
+        console.log(movie.genre.some((genre) => movie.genre.includes(genre))))
   );
 
   return (
@@ -68,7 +70,11 @@ export const MovieList = () => {
             </button>
           </div>
           <div className="col-md-12">
-            <MovieFilter filter={filter} setFilter={setFilter} movies={movies} />
+            <MovieFilter
+              filter={filter}
+              setFilter={setFilter}
+              movies={movies}
+            />
           </div>
         </div>
         <div className="row">

@@ -1,23 +1,33 @@
 import { Movie } from "../models/Movie";
 import { useState } from "react";
+import { MovieQuery } from "../models/MovieQuery";
 
 export const MovieFilter = ({
   filter,
   setFilter,
-  movies
+  movies,
 }: {
-  filter: string;
-  setFilter: (newValue: string) => void;
+  filter: MovieQuery;
+  setFilter: (newValue: MovieQuery) => void;
   movies: Movie[];
 }) => {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const genreOptions = ["Action", "Comedy", "Drama", "Horror", "Romance"];
+  const genreOptions = Array.from(new Set(movies.flatMap((m) => m.genre)));
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value + " " + selectedGenres.join(" "));
+    const newMovie: MovieQuery = {
+      title: event.target.value,
+      genres: selectedGenres,
+    };
+    setFilter(newMovie);
   };
 
-  const handleGenreChange = (genre: string) => {
+  const handleGenreChange = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    genre: string
+  ) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (selectedGenres.includes(genre)) {
       setSelectedGenres(selectedGenres.filter((g) => g !== genre));
     } else {
@@ -55,10 +65,9 @@ export const MovieFilter = ({
                     className={`card me-3 mb-3 ${
                       selectedGenres.includes(genre) ? "bg-primary" : ""
                     }`}
-                    style={{ width: "10rem", cursor: "pointer" }}
-                    onClick={() => handleGenreChange(genre)}
+                    onClick={(e) => handleGenreChange(e, genre)}
                   >
-                    <div className="card-body text-center text-white">
+                    <div className="card-body text-center">
                       <h5 className="card-title">{genre}</h5>
                     </div>
                   </div>
@@ -77,7 +86,7 @@ export const MovieFilter = ({
         type="text"
         className="form-control my-3"
         placeholder="Search movies..."
-        value={filter}
+        value={filter?.title}
         onChange={handleFilterChange}
       />
       <Accordion />
