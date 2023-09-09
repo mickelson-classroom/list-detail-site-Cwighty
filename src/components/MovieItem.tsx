@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Movie } from "../models/Movie";
 
-
 export const MovieItem = ({
   movie,
   onDelete,
@@ -28,9 +27,10 @@ export const MovieItem = ({
     >
       <div className="card-body d-flex justify-content-between">
         <h5 className="card-title">{movie.title}</h5>
-        <button className="btn btn-sm btn-outline-danger" onClick={onDelete}>
-          Delete
-        </button>
+        <button
+          className="my-auto btn btn-sm btn-close"
+          onClick={onDelete}
+        ></button>
       </div>
     </div>
   );

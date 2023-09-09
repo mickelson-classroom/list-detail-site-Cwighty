@@ -6,7 +6,7 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
     title: "",
     director: "",
     releaseYear: new Date().getFullYear(),
-    genre: [],
+    genres: [],
     rating: 5,
   } as Movie;
 
@@ -41,7 +41,6 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
           </div>
           <div className="modal-body">
             <div>
-              <h2>Add Movie</h2>
               <form>
                 <div className="row">
                   <div className="col-lg-6">
@@ -92,23 +91,6 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
                   </div>
 
                   <div className="col-lg-6">
-                    <div className="form-group">
-                      <label htmlFor="genre">Genre</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="genre"
-                        placeholder="Enter genre"
-                        value={newMovie.genre.join(", ")}
-                        onChange={(e) =>
-                          setNewMovie({
-                            ...newMovie,
-                            genre: e.target.value.split(", "),
-                          })
-                        }
-                      />
-                    </div>
-
                     <div className="form-group">
                       <label htmlFor="rating">Rating</label>
                       <input

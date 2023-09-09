@@ -5,7 +5,6 @@ import { AddMovie } from "./AddMovie";
 import { MovieItem } from "./MovieItem";
 import { MovieDetail } from "./MovieDetail";
 import { AddGenreModal } from "./AddGenreModal";
-import { MovieQuery } from "../models/MovieQuery";
 
 export const MovieList = () => {
   const [movies, setMovies] = useState<Movie[]>([
@@ -13,32 +12,55 @@ export const MovieList = () => {
       title: "The Shawshank Redemption",
       director: "Frank Darabont",
       releaseYear: 1994,
-      genre: ["Drama"],
+      genres: ["Drama"],
       rating: 9.3,
     },
     {
       title: "The Godfather",
       director: "Francis Ford Coppola",
       releaseYear: 1972,
-      genre: ["Crime", "Drama"],
+      genres: ["Crime", "Drama"],
       rating: 9.2,
     },
     {
       title: "The Dark Knight",
       director: "Christopher Nolan",
       releaseYear: 2008,
-      genre: ["Action", "Crime", "Drama"],
+      genres: ["Action", "Crime", "Drama"],
       rating: 9.0,
     },
   ]);
 
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [filter, setFilter] = useState<MovieQuery>({ title: "", genres: [] });
+  const [filter, setFilter] = useState<string>("");
 
   const handleDelete = (index: number) => {
     const newMovies = [...movies];
     newMovies.splice(index, 1);
     setMovies(newMovies);
+  };
+
+  const handleRemoveGenre = (genre: string) => {
+    if (selectedMovie) {
+      const newMovies = [...movies];
+      const index = newMovies.findIndex((m) => m.title === selectedMovie.title);
+      newMovies[index].genres = newMovies[index].genres.filter(
+        (g) => g !== genre
+      );
+      setMovies(newMovies);
+    }
+  };
+
+  const handleGenreAdded = (genre: string) => {
+    if (selectedMovie) {
+      const newMovies = [...movies];
+      const index = newMovies.findIndex((m) => m.title === selectedMovie.title);
+      if (newMovies[index].genres.includes(genre)) {
+        return;
+      }
+      newMovies[index].genres = [...newMovies[index].genres, genre];
+      setMovies(newMovies);
+    }
   };
 
   const handleSelect = (movie: Movie) => {
@@ -47,12 +69,9 @@ export const MovieList = () => {
 
   const filteredMovies = movies.filter(
     (movie) =>
-      movie.title?.toLowerCase().includes(filter.title.toLowerCase()) ||
-      movie.director
-        ?.toLowerCase()
-        .includes(filter?.title.toLowerCase() ?? "") ||
-      (movie.genre.some((genre) => movie.genre.includes(genre)) &&
-        console.log(movie.genre.some((genre) => movie.genre.includes(genre))))
+      movie.title?.toLowerCase().includes(filter.toLowerCase()) ||
+      movie.director?.toLowerCase().includes(filter.toLowerCase() ?? "") ||
+      movie.genres.some((g) => g.toLowerCase().includes(filter.toLowerCase()))
   );
 
   return (
@@ -80,7 +99,11 @@ export const MovieList = () => {
         <div className="row">
           <div className="col-md-6">
             {selectedMovie && filteredMovies.includes(selectedMovie) ? (
-              <MovieDetail movie={selectedMovie} />
+              <MovieDetail
+                movie={selectedMovie}
+                onRemoveGenre={handleRemoveGenre}
+                onGenreAdded={handleGenreAdded}
+              />
             ) : (
               <em>No movie selected</em>
             )}
