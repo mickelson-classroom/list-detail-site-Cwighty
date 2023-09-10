@@ -5,6 +5,7 @@ import { NumberInput } from "../../../components/NumberInput";
 
 export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
   const defaultMovie: Movie = {
+    id: 1,
     title: "",
     director: "",
     releaseYear: new Date().getFullYear(),
@@ -18,6 +19,7 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
   const validationRules: {
     [key in keyof Movie]: ((value: any) => string | null)[];
   } = {
+    id: [],
     title: [
       (value: string) => (value.length >= 1 ? null : "Title is required"),
     ],

@@ -9,6 +9,7 @@ import { AddGenreModal } from "./AddGenreModal";
 export const MovieList = () => {
   const [movies, setMovies] = useState<Movie[]>([
     {
+      id: 1,
       title: "The Shawshank Redemption",
       director: "Frank Darabont",
       releaseYear: 1994,
@@ -16,6 +17,7 @@ export const MovieList = () => {
       rating: 9.3,
     },
     {
+      id: 2,
       title: "The Godfather",
       director: "Francis Ford Coppola",
       releaseYear: 1972,
@@ -23,6 +25,7 @@ export const MovieList = () => {
       rating: 9.2,
     },
     {
+      id: 3,
       title: "The Dark Knight",
       director: "Christopher Nolan",
       releaseYear: 2008,
@@ -38,6 +41,11 @@ export const MovieList = () => {
     const newMovies = [...movies];
     newMovies.splice(index, 1);
     setMovies(newMovies);
+  };
+
+  const handleAddMovie = (movie: Movie) => {
+    const lastId = movies[movies.length - 1].id;
+    setMovies([...movies, { ...movie, id: lastId + 1 }]);
   };
 
   const handleRemoveGenre = (genre: string) => {
@@ -99,11 +107,15 @@ export const MovieList = () => {
         <div className="row">
           <div className="col-md-6">
             {selectedMovie && filteredMovies.includes(selectedMovie) ? (
-              <MovieDetail
-                movie={selectedMovie}
-                onRemoveGenre={handleRemoveGenre}
-                onGenreAdded={handleGenreAdded}
-              />
+              <div className="border border-2 rounded p-3">
+                <MovieDetail
+                  movie={selectedMovie}
+                  onRemoveGenre={handleRemoveGenre}
+                  onGenreAdded={handleGenreAdded}
+                  setMovies={setMovies}
+                  movies={movies}
+                />
+              </div>
             ) : (
               <em>No movie selected</em>
             )}
@@ -124,7 +136,7 @@ export const MovieList = () => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <AddMovie onAdd={(movie) => setMovies([...movies, movie])} />
+            <AddMovie onAdd={handleAddMovie} />
           </div>
         </div>
       </div>
