@@ -1,5 +1,5 @@
 import './App.css';
-import { MovieList } from './components/MovieList';
+import { MovieList } from './features/movieLilst/components/MovieList';
 
 function App() {
 
