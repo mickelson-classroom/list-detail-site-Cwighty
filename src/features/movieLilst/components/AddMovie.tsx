@@ -15,26 +15,27 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
   const [newMovie, setNewMovie] = useState<Movie>(defaultMovie);
   const [validated, setValidated] = useState<boolean>(false);
 
-  const validationRules: { [key in keyof Movie]: ((value: any) => string | null)[] } =
-    {
-      title: [
-        (value: string) => (value.length >= 1 ? null : "Title is required"),
-      ],
-      director: [
-        (value: string) => (value.length >= 1 ? null : "Director is required"),
-      ],
-      releaseYear: [
-        (value: number) =>
-          value >= 1900 && value <= new Date().getFullYear()
-            ? null
-            : "Invalid release year",
-      ],
-      rating: [
-        (value: number) =>
-          value >= 1 && value <= 10 ? null : "Rating must be between 1 and 10",
-      ],
-      genres : []
-    };
+  const validationRules: {
+    [key in keyof Movie]: ((value: any) => string | null)[];
+  } = {
+    title: [
+      (value: string) => (value.length >= 1 ? null : "Title is required"),
+    ],
+    director: [
+      (value: string) => (value.length >= 1 ? null : "Director is required"),
+    ],
+    releaseYear: [
+      (value: number) =>
+        value >= 1900 && value <= new Date().getFullYear()
+          ? null
+          : "Invalid release year",
+    ],
+    rating: [
+      (value: number) =>
+        value >= 1 && value <= 10 ? null : "Rating must be between 1 and 10",
+    ],
+    genres: [],
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -42,18 +43,6 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
 
     const form = e.currentTarget as HTMLFormElement;
     let formIsValid = true;
-
-    for (const field in validationRules) {
-      for (const rule of validationRules[field]) {
-        if (rule(newMovie[field]) !== null) {
-          formIsValid = false;
-          break;
-        }
-      }
-      if (!formIsValid) {
-        break;
-      }
-    }
 
     if (formIsValid) {
       onAdd(newMovie);
