@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Movie } from "../../../models/Movie";
 import { MovieFilter } from "./MovieFilter";
-import { AddMovie } from "./AddMovie";
 import { MovieItem } from "./MovieItem";
 import { MovieDetail } from "./MovieDetail";
 import { AddGenreModal } from "./AddGenreModal";
+import { AddMovie } from "./AddMovie";
 
 export const MovieList = () => {
   const [movies, setMovies] = useState<Movie[]>([
@@ -15,6 +15,7 @@ export const MovieList = () => {
       releaseYear: 1994,
       genres: ["Drama"],
       rating: 9.3,
+      runTimeMin: 90,
     },
     {
       id: 2,
@@ -23,6 +24,7 @@ export const MovieList = () => {
       releaseYear: 1972,
       genres: ["Crime", "Drama"],
       rating: 9.2,
+      runTimeMin: 96,
     },
     {
       id: 3,
@@ -31,6 +33,7 @@ export const MovieList = () => {
       releaseYear: 2008,
       genres: ["Action", "Crime", "Drama"],
       rating: 9.0,
+      runTimeMin: 160,
     },
   ]);
 
@@ -44,7 +47,7 @@ export const MovieList = () => {
   };
 
   const handleAddMovie = (movie: Movie) => {
-    const lastId = movies[movies.length - 1].id;
+    const lastId = movies[movies.length - 1]?.id ?? 1;
     setMovies([...movies, { ...movie, id: lastId + 1 }]);
   };
 
@@ -105,7 +108,7 @@ export const MovieList = () => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-8 col-lg-6">
             {selectedMovie && filteredMovies.includes(selectedMovie) ? (
               <div className="border border-2 rounded p-3">
                 <MovieDetail
@@ -120,7 +123,7 @@ export const MovieList = () => {
               <em>No movie selected</em>
             )}
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4 col-lg-6">
             {filteredMovies.length === 0 && <em className="m-2">No movies</em>}
             {filteredMovies.map((movie, index) => (
               <div className="row" key={index}>
@@ -140,11 +143,6 @@ export const MovieList = () => {
           </div>
         </div>
       </div>
-      <AddGenreModal
-        selectedMovie={selectedMovie}
-        movies={movies}
-        setMovies={setMovies}
-      />
     </>
   );
 };
