@@ -44,7 +44,7 @@ export const NumberInput: FC<NumberInputProps> = ({
 
   return (
     <div className="form-group">
-      <label>{label}</label>
+      <label className="form-label">{label}</label>
       <input
         type="number"
         className={`form-control ${

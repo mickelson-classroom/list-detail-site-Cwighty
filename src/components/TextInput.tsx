@@ -43,7 +43,7 @@ export const TextInput: FC<TextInputProps> = ({
 
   return (
     <div className="form-group">
-      <label>{label}</label>
+      <label className="form-label">{label}</label>
       <input
         type="text"
         className={`form-control ${
