@@ -34,7 +34,7 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
 
     onAdd(newMovie);
     setNewMovie(defaultMovie);
-    setValidated(true);
+    setValidated(false);
   };
 
   return (

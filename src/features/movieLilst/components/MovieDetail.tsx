@@ -74,19 +74,19 @@ export const MovieDetail = ({
         <TextInput
           label={"Title"}
           value={editedMovie.title}
-          onChange={(value) => setEditedMovie({ ...movie, title: value })}
+          onChange={(value) => setEditedMovie({ ...editedMovie, title: value })}
           rules={movieValidationRules.title}
         />
         <TextInput
           label={"Director"}
           value={editedMovie.director}
-          onChange={(value) => setEditedMovie({ ...movie, director: value })}
+          onChange={(value) => setEditedMovie({ ...editedMovie, director: value })}
           rules={movieValidationRules.director}
         />
         <NumberInput
           label={"Release Year"}
           value={editedMovie.releaseYear}
-          onChange={(value) => setEditedMovie({ ...movie, releaseYear: value })}
+          onChange={(value) => setEditedMovie({ ...editedMovie, releaseYear: value })}
           rules={movieValidationRules.releaseYear}
         />
         <div className="d-flex flex-wrap">
@@ -119,7 +119,7 @@ export const MovieDetail = ({
         <NumberInput
           label={"Rating"}
           value={editedMovie.rating}
-          onChange={(value) => setEditedMovie({ ...movie, rating: value })}
+          onChange={(value) => setEditedMovie({ ...editedMovie, rating: value })}
           rules={movieValidationRules.rating}
         />
         <NumberInput
