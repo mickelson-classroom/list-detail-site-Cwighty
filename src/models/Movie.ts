@@ -6,6 +6,7 @@ export interface Movie {
   runTimeMin: number;
   genres: string[];
   rating: number;
+  theatreType: string;
 }
 
 export const movieValidationRules: {
@@ -31,6 +32,7 @@ export const movieValidationRules: {
       value >= 1 ? null : "Runtime must be at least 1 minute",
   ],
   genres: [],
+  theatreType: [],
 };
 
 export const validateField = <T>(
@@ -46,3 +48,9 @@ export const validateField = <T>(
   }
   return errors;
 };
+
+export const theatreTypeOptions = [
+  { value: "IMAX", label: "IMAX" },
+  { value: "3D", label: "3D" },
+  { value: "2D", label: "2D" },
+];

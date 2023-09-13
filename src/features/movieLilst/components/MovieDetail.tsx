@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import {
   Movie,
   movieValidationRules,
+  theatreTypeOptions,
   validateField,
 } from "../../../models/Movie";
 import { GenreSelector } from "./GenreSelector";
 import { TextInput } from "../../../components/TextInput";
 import { NumberInput } from "../../../components/NumberInput";
+import { OptionInput } from "../../../components/OptionInput";
 
 export const MovieDetail = ({
   movie,
@@ -80,13 +82,17 @@ export const MovieDetail = ({
         <TextInput
           label={"Director"}
           value={editedMovie.director}
-          onChange={(value) => setEditedMovie({ ...editedMovie, director: value })}
+          onChange={(value) =>
+            setEditedMovie({ ...editedMovie, director: value })
+          }
           rules={movieValidationRules.director}
         />
         <NumberInput
           label={"Release Year"}
           value={editedMovie.releaseYear}
-          onChange={(value) => setEditedMovie({ ...editedMovie, releaseYear: value })}
+          onChange={(value) =>
+            setEditedMovie({ ...editedMovie, releaseYear: value })
+          }
           rules={movieValidationRules.releaseYear}
         />
         <div className="d-flex flex-wrap">
@@ -119,7 +125,9 @@ export const MovieDetail = ({
         <NumberInput
           label={"Rating"}
           value={editedMovie.rating}
-          onChange={(value) => setEditedMovie({ ...editedMovie, rating: value })}
+          onChange={(value) =>
+            setEditedMovie({ ...editedMovie, rating: value })
+          }
           rules={movieValidationRules.rating}
         />
         <NumberInput
@@ -127,6 +135,15 @@ export const MovieDetail = ({
           value={editedMovie.runTimeMin}
           onChange={(value) => setEditedMovie({ ...movie, runTimeMin: value })}
           rules={movieValidationRules.runTimeMin}
+        />
+        <OptionInput
+          options={theatreTypeOptions}
+          type={"radio"}
+          label={"Theatre Type"}
+          value={editedMovie.theatreType}
+          onChange={(value) => {
+            setEditedMovie({ ...movie, theatreType: value });
+          }}
         />
       </div>
     );
@@ -161,6 +178,7 @@ export const MovieDetail = ({
       </div>
       <p className="lead">Rating: {movie.rating}</p>
       <p className="lead">Runtime: {movie.runTimeMin} minutes</p>
+      <p className="lead">Theatre Type: {movie.theatreType}</p>
     </div>
   );
 };

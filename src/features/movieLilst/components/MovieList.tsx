@@ -16,6 +16,7 @@ export const MovieList = () => {
       genres: ["Drama"],
       rating: 9.3,
       runTimeMin: 90,
+      theatreType: "2D",
     },
     {
       id: 2,
@@ -25,6 +26,7 @@ export const MovieList = () => {
       genres: ["Crime", "Drama"],
       rating: 9.2,
       runTimeMin: 96,
+      theatreType: "2D",
     },
     {
       id: 3,
@@ -34,6 +36,7 @@ export const MovieList = () => {
       genres: ["Action", "Crime", "Drama"],
       rating: 9.0,
       runTimeMin: 160,
+      theatreType: "IMAX",
     },
   ]);
 

@@ -2,10 +2,12 @@ import React, { useState, FormEvent, useRef, useEffect } from "react";
 import {
   Movie,
   movieValidationRules,
+  theatreTypeOptions,
   validateField,
 } from "../../../models/Movie";
 import { TextInput } from "../../../components/TextInput";
 import { NumberInput } from "../../../components/NumberInput";
+import { OptionInput } from "../../../components/OptionInput";
 
 export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
   const defaultMovie: Movie = {
@@ -16,6 +18,7 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
     genres: [],
     rating: 5,
     runTimeMin: 60,
+    theatreType: "2D",
   };
 
   const [newMovie, setNewMovie] = useState<Movie>(defaultMovie);
@@ -90,26 +93,31 @@ export const AddMovie = ({ onAdd }: { onAdd: (movie: Movie) => void }) => {
                   />
                 </div>
 
-                <div className="col-lg-6">
-                  <NumberInput
-                    label="Rating"
-                    value={newMovie.rating}
-                    onChange={(value: number) =>
-                      setNewMovie({ ...newMovie, rating: value })
-                    }
-                    rules={movieValidationRules.rating}
-                  />
-                </div>
-                <div className="col-lg-6">
-                  <NumberInput
-                    label="Run Time (Minutes)"
-                    value={newMovie.runTimeMin}
-                    onChange={(value: number) =>
-                      setNewMovie({ ...newMovie, runTimeMin: value })
-                    }
-                    rules={movieValidationRules.runTimeMin}
-                  />
-                </div>
+                <NumberInput
+                  label="Rating"
+                  value={newMovie.rating}
+                  onChange={(value: number) =>
+                    setNewMovie({ ...newMovie, rating: value })
+                  }
+                  rules={movieValidationRules.rating}
+                />
+                <NumberInput
+                  label="Run Time (Minutes)"
+                  value={newMovie.runTimeMin}
+                  onChange={(value: number) =>
+                    setNewMovie({ ...newMovie, runTimeMin: value })
+                  }
+                  rules={movieValidationRules.runTimeMin}
+                />
+                <OptionInput
+                  options={theatreTypeOptions}
+                  type={"select"}
+                  label={"Theatre Type"}
+                  value={newMovie.theatreType}
+                  onChange={(value: string) => {
+                    setNewMovie({ ...newMovie, theatreType: value });
+                  }}
+                />
                 <div className="modal-footer">
                   <button
                     type="button"
